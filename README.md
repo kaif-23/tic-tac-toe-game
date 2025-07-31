@@ -4,13 +4,13 @@ A modern, multiplayer Tic Tac Toe game with three exciting game modes!
 ## 📸 Screenshots
 
 ### Game Board
-![Game Board](public/images/Screenshot 2025-07-31 132133.png)
+![Game Board](public/images/Screenshot%202025-07-31%20132133.png)
 
 ### Mode Selection
-![Mode Selection](public/images/Screenshot 2025-07-31 132048.png)
+![Mode Selection](public/images/Screenshot%202025-07-31%20132048.png)
 
 ### Multiplayer Setup
-![Multiplayer Setup](public/images/Screenshot 2025-07-31 132100.png)
+![Multiplayer Setup](public/images/Screenshot%202025-07-31%20132100.png)
 
 ## 🎮 Game Modes
 - **Offline Mode**: Play locally with a friend on the same device
