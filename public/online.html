@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tic Tac Toe</title>
+    <link rel="stylesheet" href="online.css" />
+</head>
+
+<body>
+
+    <div id="message-box" class="message-box hide">
+        <div class="message-box-content">
+            <p id="message-box-text"></p>
+            <button id="message-box-close">OK</button>
+        </div>
+    </div>
+
+    <div id="mode-selection-area" class="mode-selection-area">
+        <h1>Choose Game Mode</h1>
+        <button id="play-offline-btn" class="mode-btn">Play Offline (Local)</button>
+        <button id="play-ai-btn" class="mode-btn">Play vs AI (Minimax)</button>
+        <button id="play-online-btn" class="mode-btn">Play Online (Multiplayer)</button>
+    </div>
+
+    <div id="online-controls" class="online-controls hide">
+        <h1>Multiplayer Tic Tac Toe</h1>
+        <button id="create-room">Create Room</button>
+        <div class="room-input-group">
+            <input type="text" id="room-token" placeholder="Enter Room Code" />
+            <button id="join-room">Join Room</button>
+        </div>
+        <button id="back-to-mode-selection-from-online-btn" class="back-btn">Back to Mode Selection</button>
+    </div>
+
+    <div id="game-area" class="game-area hide">
+        <p id="room-display" class="room-display-in-game">Room Code: N/A</p>
+
+        <main>
+            <h1>Tic Tac Toe</h1>
+            <div class="scoreboard">
+                <div>
+                    <h3>Player X</h3>
+                    <p id="x-score">0</p>
+                </div>
+                <div>
+                    <h3>Player O</h3>
+                    <p id="o-score">0</p>
+                </div>
+            </div>
+            <div class="current-turn">
+                <p class="turn-indicator">Player X's Turn</p>
+            </div>
+            <div class="container">
+                <div class="game">
+                    <button class="box"></button>
+                    <button class="box"></button>
+                    <button class="box"></button>
+                    <button class="box"></button>
+                    <button class="box"></button>
+                    <button class="box"></button>
+                    <button class="box"></button>
+                    <button class="box"></button>
+                    <button class="box"></button>
+                </div>
+            </div>
+            <button id="reset-btn">Reset Scores</button>
+            <button id="back-to-mode-selection-btn" class="back-btn">Back to Mode Selection</button>
+        </main>
+    </div>
+
+    <div class="msg-container hide">
+        <p id="msg"></p>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="online.js"></script>
+</body>
+
+</html>
