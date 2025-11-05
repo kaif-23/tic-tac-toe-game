@@ -1,8 +1,8 @@
 # Tic Tac Toe Game
 A modern, multiplayer Tic Tac Toe game with three exciting game modes!
 
-## LIVE LINK
-`https://tic-tac-toe-jzaz.onrender.com`
+## 🔗 Live Demo
+👉 [Play the Live Game](https://tic-tac-toe-jzaz.onrender.com)
 
 ## 📸 Screenshots
 
