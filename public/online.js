@@ -301,6 +301,18 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    function disableChat() {
+        chatInput.disabled = true;
+        chatSendBtn.disabled = true;
+        chatInput.placeholder = "Waiting for opponent to join...";
+    }
+
+    function enableChat() {
+        chatInput.disabled = false;
+        chatSendBtn.disabled = false;
+        chatInput.placeholder = "Type a message...";
+    }
+
     chatSendBtn.addEventListener('click', sendChatMessage);
 
     chatInput.addEventListener('keypress', (e) => {
@@ -426,6 +438,7 @@ document.addEventListener("DOMContentLoaded", () => {
         turnIndicator.innerText = "Waiting for opponent...";
         clearChat();
         addChatMessage("Room created! Share the room code with your friend.", 'system');
+        disableChat(); // Disable chat until opponent joins
     });
 
     socket.on("startGame", (code) => {
@@ -437,6 +450,7 @@ document.addEventListener("DOMContentLoaded", () => {
         showGameArea();
         turnIndicator.innerText = `Player ${myTurn ? mySymbol : (mySymbol === 'X' ? 'O' : 'X')}'s Turn`;
         addChatMessage("Game started! Good luck!", 'system');
+        enableChat(); // Enable chat when both players are connected
     });
 
     socket.on("updateBoard", ({ index, symbol }) => {
@@ -497,6 +511,7 @@ document.addEventListener("DOMContentLoaded", () => {
         token = "";
         roomDisplay.innerText = "Room Code: N/A";
         clearChat();
+        disableChat(); // Disable chat when error occurs
     });
 
     showModeSelection();

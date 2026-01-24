@@ -527,6 +527,7 @@ main h1 {
     color: #ecf0f1;
     font-size: 1rem;
     outline: none;
+    transition: all 0.3s ease;
 }
 
 #chat-input::placeholder {
@@ -538,6 +539,17 @@ main h1 {
     box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.5);
 }
 
+#chat-input:disabled {
+    background-color: #2c3e50;
+    color: #7f8c8d;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+#chat-input:disabled::placeholder {
+    color: #7f8c8d;
+}
+
 #chat-send {
     padding: 12px 25px;
     background-color: #27ae60;
@@ -547,17 +559,24 @@ main h1 {
     cursor: pointer;
     font-size: 1rem;
     font-weight: bold;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease, opacity 0.3s ease;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-#chat-send:hover {
+#chat-send:hover:not(:disabled) {
     background-color: #229a54;
     transform: translateY(-1px);
 }
 
-#chat-send:active {
+#chat-send:active:not(:disabled) {
     transform: translateY(0);
+}
+
+#chat-send:disabled {
+    background-color: #95a5a6;
+    cursor: not-allowed;
+    opacity: 0.6;
+    transform: none;
 }
 
 @media (max-width: 1200px) {

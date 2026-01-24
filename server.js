@@ -126,6 +126,7 @@ io.on("connection", (socket) => {
 
         // Send system message to both players
         io.to(roomCode).emit("systemMessage", "Both players connected. Game is starting!");
+        io.to(roomCode).emit("systemMessage", "You can now chat with your opponent!");
 
         console.log(`User ${socket.id} joined room ${roomCode}`);
     });
@@ -189,6 +190,12 @@ io.on("connection", (socket) => {
     socket.on("chatMessage", ({ token, message }) => {
         const room = rooms[token];
         if (!room || !message || message.trim() === "") return;
+
+        // Check if both players are in the room
+        if (room.players.length < 2) {
+            socket.emit("systemMessage", "Cannot send messages until opponent joins.");
+            return;
+        }
 
         const playerIndex = room.players.indexOf(socket.id);
         if (playerIndex === -1) return;
