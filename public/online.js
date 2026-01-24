@@ -27,6 +27,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const messageBoxText = document.getElementById("message-box-text");
     const messageBoxCloseBtn = document.getElementById("message-box-close");
 
+    // Chat elements
+    const chatSection = document.getElementById("chat-section");
+    const chatMessages = document.getElementById("chat-messages");
+    const chatInput = document.getElementById("chat-input");
+    const chatSendBtn = document.getElementById("chat-send");
+
     let gameMode = 'none';
     let mySymbol = "";
     let myTurn = false;
@@ -62,6 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
         modeSelectionArea.classList.remove("hide");
         onlineControls.classList.add("hide");
         gameArea.classList.add("hide");
+        chatSection.classList.add("hide");
         xscore = 0;
         oscore = 0;
         xscoreBoard.innerText = xscore;
@@ -77,24 +84,34 @@ document.addEventListener("DOMContentLoaded", () => {
         localBoard = Array(9).fill("");
         localCurrentTurn = 0;
         lastWinner = "";
+        clearChat();
     }
 
     function showOnlineLobby() {
         modeSelectionArea.classList.add("hide");
         onlineControls.classList.remove("hide");
         gameArea.classList.add("hide");
+        chatSection.classList.add("hide");
         gameMode = 'online';
         mySymbol = "";
         myTurn = false;
         token = "";
         roomDisplay.innerText = "Room Code: N/A";
         turnIndicator.innerText = "Player X's Turn";
+        clearChat();
     }
 
     function showGameArea() {
         modeSelectionArea.classList.add("hide");
         onlineControls.classList.add("hide");
         gameArea.classList.remove("hide");
+
+        // Show chat only for online mode
+        if (gameMode === 'online') {
+            chatSection.classList.remove("hide");
+        } else {
+            chatSection.classList.add("hide");
+        }
     }
 
     function initializeGame(isFullReset = false) {
@@ -243,6 +260,65 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    // Chat functions
+    function clearChat() {
+        chatMessages.innerHTML = '';
+    }
+
+    function addChatMessage(text, type = 'system', sender = '') {
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('chat-message');
+
+        if (type === 'my') {
+            messageDiv.classList.add('my-message');
+        } else if (type === 'other') {
+            messageDiv.classList.add('other-message');
+        } else {
+            messageDiv.classList.add('system-message');
+        }
+
+        if (sender && type !== 'system') {
+            const senderSpan = document.createElement('div');
+            senderSpan.classList.add('sender');
+            senderSpan.textContent = sender;
+            messageDiv.appendChild(senderSpan);
+        }
+
+        const textSpan = document.createElement('div');
+        textSpan.classList.add('text');
+        textSpan.textContent = text;
+        messageDiv.appendChild(textSpan);
+
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function sendChatMessage() {
+        const message = chatInput.value.trim();
+        if (message && gameMode === 'online' && token) {
+            socket.emit('chatMessage', { token, message });
+            chatInput.value = '';
+        }
+    }
+
+    chatSendBtn.addEventListener('click', sendChatMessage);
+
+    chatInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            sendChatMessage();
+        }
+    });
+
+    // Socket listeners for chat
+    socket.on('chatMessage', ({ sender, message, isMe }) => {
+        const displayName = sender === 'X' ? 'Player X' : 'Player O';
+        addChatMessage(message, isMe ? 'my' : 'other', displayName);
+    });
+
+    socket.on('systemMessage', (message) => {
+        addChatMessage(message, 'system');
+    });
+
     playOfflineBtn.addEventListener("click", () => {
         gameMode = 'offline';
         showGameArea();
@@ -348,6 +424,8 @@ document.addEventListener("DOMContentLoaded", () => {
         initializeGame(true);
         showGameArea();
         turnIndicator.innerText = "Waiting for opponent...";
+        clearChat();
+        addChatMessage("Room created! Share the room code with your friend.", 'system');
     });
 
     socket.on("startGame", (code) => {
@@ -358,6 +436,7 @@ document.addEventListener("DOMContentLoaded", () => {
         initializeGame(true);
         showGameArea();
         turnIndicator.innerText = `Player ${myTurn ? mySymbol : (mySymbol === 'X' ? 'O' : 'X')}'s Turn`;
+        addChatMessage("Game started! Good luck!", 'system');
     });
 
     socket.on("updateBoard", ({ index, symbol }) => {
@@ -417,6 +496,7 @@ document.addEventListener("DOMContentLoaded", () => {
         myTurn = false;
         token = "";
         roomDisplay.innerText = "Room Code: N/A";
+        clearChat();
     });
 
     showModeSelection();

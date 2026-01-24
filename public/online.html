@@ -35,39 +35,54 @@
     </div>
 
     <div id="game-area" class="game-area hide">
-        <p id="room-display" class="room-display-in-game">Room Code: N/A</p>
+        <div class="game-section">
+            <p id="room-display" class="room-display-in-game">Room Code: N/A</p>
 
-        <main>
-            <h1>Tic Tac Toe</h1>
-            <div class="scoreboard">
-                <div>
-                    <h3>Player X</h3>
-                    <p id="x-score">0</p>
+            <main>
+                <h1>Tic Tac Toe</h1>
+                <div class="scoreboard">
+                    <div>
+                        <h3>Player X</h3>
+                        <p id="x-score">0</p>
+                    </div>
+                    <div>
+                        <h3>Player O</h3>
+                        <p id="o-score">0</p>
+                    </div>
                 </div>
-                <div>
-                    <h3>Player O</h3>
-                    <p id="o-score">0</p>
+                <div class="current-turn">
+                    <p class="turn-indicator">Player X's Turn</p>
+                </div>
+                <div class="container">
+                    <div class="game">
+                        <button class="box"></button>
+                        <button class="box"></button>
+                        <button class="box"></button>
+                        <button class="box"></button>
+                        <button class="box"></button>
+                        <button class="box"></button>
+                        <button class="box"></button>
+                        <button class="box"></button>
+                        <button class="box"></button>
+                    </div>
+                </div>
+                <button id="reset-btn">Reset Scores</button>
+                <button id="back-to-mode-selection-btn" class="back-btn">Back to Mode Selection</button>
+            </main>
+        </div>
+
+        <div id="chat-section" class="chat-section hide">
+            <div class="chat-container">
+                <h2>Chat</h2>
+                <div id="chat-messages" class="chat-messages">
+                    <!-- Messages will appear here -->
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" id="chat-input" placeholder="Type a message..." maxlength="200" />
+                    <button id="chat-send">Send</button>
                 </div>
             </div>
-            <div class="current-turn">
-                <p class="turn-indicator">Player X's Turn</p>
-            </div>
-            <div class="container">
-                <div class="game">
-                    <button class="box"></button>
-                    <button class="box"></button>
-                    <button class="box"></button>
-                    <button class="box"></button>
-                    <button class="box"></button>
-                    <button class="box"></button>
-                    <button class="box"></button>
-                    <button class="box"></button>
-                    <button class="box"></button>
-                </div>
-            </div>
-            <button id="reset-btn">Reset Scores</button>
-            <button id="back-to-mode-selection-btn" class="back-btn">Back to Mode Selection</button>
-        </main>
+        </div>
     </div>
 
     <div class="msg-container hide">
